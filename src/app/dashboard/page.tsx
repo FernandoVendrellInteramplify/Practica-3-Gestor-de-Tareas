@@ -38,7 +38,7 @@ export default async function DashboardPage() {
                 <LogoutForm />
             </header>
 
-            <div className="animate-[fadeLeft_0.7s_ease-out] mb-8 hover:scale-101">
+            
                 <BoardModal
                 title="Crear Tablon"
                 user_id={session.user.id}
@@ -46,7 +46,7 @@ export default async function DashboardPage() {
                 submitText="Crear"
                 formAction={CrearTablon}
                 />
-            </div>
+            
 
             <section>
                 <TablonesGrid tablones={tablonesConTareas} />

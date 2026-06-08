@@ -30,7 +30,7 @@ export default function BoardModal({
 
     return (
         <>
-            <button type="button" onClick={() => setOpen(true)} className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500">
+            <button type="button" onClick={() => setOpen(true)} className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500 mb-8 animate-[fadeLeft_0.7s_ease-out] hover:scale-101">
                 {buttonText}
             </button>
 
@@ -45,7 +45,7 @@ export default function BoardModal({
 
                         <Confirm formAction={async (formData) => {await formAction(formData);setOpen(false);}}
                             message="¿Crear este tablón?" successMessage={`Tablón "${titulo}" creado correctamente`}
-                                className="grid gap-4 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-2">
+                                className="grid gap-4 rounded-2xl border border-zinc-200 bg-white p-6 md:grid-cols-2">
 
                             <input type="hidden" name="usuario_id" required value={user_id}/>
 

@@ -73,7 +73,7 @@ export default function Confirm({
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50">
-          <div className="animate-[fadeUp_0.2s_ease-out] w-full max-w-md rounded-2xl bg-zinc-100 p-6 shadow-2xl border border-zinc-200 shadow-blue-600/30 dark:bg-zinc-800 dark:border-zinc-950">
+          <div className="animate-[fadeUp_0.2s_ease-out] w-full max-w-md rounded-2xl bg-zinc-100 p-6 shadow-2xl border border-zinc-200 shadow-blue-600/30">
 
             <p className="mt-3 text-zinc-700 text-center dark:text-zinc-300">
               {message}

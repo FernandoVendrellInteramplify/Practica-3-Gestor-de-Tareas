@@ -37,7 +37,7 @@ export default function TaskModal({
             </button>
 
             {open&&(
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 dark:text-white">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
                     <section>
                         <div className="w-42  rounded-2xl justify-text-center text-zinc-100 bg-blue-600"> 
                             <h2 className="text-center font-bold p-2">
