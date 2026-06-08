@@ -36,23 +36,19 @@ export default function LoginForm() {
   }, [state.success, router]);
 
   return (
-    <form action={formAction}>
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-      />
+    <form action={formAction} className="grid justify-content gap-2 p-2">
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        required
-      />
+      <label htmlFor="email">Email</label>
+      <input type="email" name="email" placeholder="Email" required
+      className="round border bg-zinc-50 rounded-lg border-zinc-300 text-black p-2"/>
 
-      <SubmitButton title="Iniciar Sesion" className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500"
+      <label htmlFor="password">Contraseña</label>
+      <input type="password" name="password" placeholder="Contraseña" required
+      className="round border bg-zinc-50 rounded-lg border-zinc-300 text-black p-2"/>
+
+      <SubmitButton title="Iniciar Sesion" className="rounded-lg cursor-pointer bg-blue-600 px-4 py-2 text-white mt-6 hover:bg-blue-500"
       t1="Iniciar sesion" t2="Iniciando ..."  />
     </form>
+    
   );
 }

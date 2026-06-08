@@ -20,25 +20,38 @@ export default async function DashboardPage() {
         }));
 
     return (
-        <div>
+        <main className="min-h-screen bg-zinc-200 font-sans p-8">
             <RefreshOnMount />
-            <h1>Dashboard</h1>  
-            <p>
-                Hola {session.user.name}
-            </p>
+
+            <div className="mx-auto max-w-7xl">
+            <header className="mb-8 flex items-center justify-between">
+                <div>
+                <h1 className="animate-[fadeLeft_0.3s_ease-out] text-4xl text-black font-bold tracking-tight">
+                    Tus Tablones
+                </h1>
+
+                <p className="animate-[fadeLeft_0.5s_ease-out] mt-2 text-zinc-600">
+                    Bienvenido, {session.user.name}
+                </p>
+                </div>
+
+                <LogoutForm />
+            </header>
+
+            <div className="animate-[fadeLeft_0.7s_ease-out] mb-8 hover:scale-101">
+                <BoardModal
+                title="Crear Tablon"
+                user_id={session.user.id}
+                buttonText="Nuevo Tablón +"
+                submitText="Crear"
+                formAction={CrearTablon}
+                />
+            </div>
+
             <section>
-                <TablonesGrid tablones={tablonesConTareas}/>
-
+                <TablonesGrid tablones={tablonesConTareas} />
             </section>
-
-            
-            <BoardModal title="Crear Tablon" user_id={session.user.id} buttonText="Nuevo Tablon"
-            submitText="Crear" formAction={CrearTablon}/>  
-
-
-            <LogoutForm />
-
-        </div>
-
+            </div>
+        </main>
     );
 }

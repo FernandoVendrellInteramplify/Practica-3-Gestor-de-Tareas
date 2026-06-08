@@ -71,4 +71,17 @@ export function getTareaTablon(tablon_id:string):Tarea[]{
         `).all(tablon_id) as Tarea[];
 }
 
+export function getEmail(email:string): Boolean{
+    if(
+        db.prepare(`
+            SELECT
+            email
+            FROM usuarios
+            WHERE email =?
+            `).get(email) === email
+    ){return true} else{
+        return false
+    }
+}
+
 export default db; 

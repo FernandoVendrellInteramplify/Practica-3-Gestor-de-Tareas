@@ -4,32 +4,43 @@
 import { revalidatePath } from 'next/cache';
 import bcryptjs from "bcryptjs";
 import db from "./db";
-import { redirect } from "next/navigation";
 import { signIn,signOut } from "@/lib/auth";
 
 
-export async function Registro(formData: FormData): Promise<void> {
-
-    const nombre = formData.get('nombre')?.toString();
-    const email = formData.get('email')?.toString();
-    const password = formData.get('password')?.toString();
+export async function Registro(prevState: any, formData: FormData){
+    const nombre = formData.get("nombre")?.toString();
+    const email = formData.get("email")?.toString();
+    const password = formData.get("password")?.toString();
+    
 
     if (!nombre || !email || !password) {
-        throw new Error("Faltan datos");
+        return { success:false, error: "Faltan datos" };
     }
 
     const hash = await bcryptjs.hash(password, 10);
 
+    try {
     db.prepare(`
         INSERT INTO usuarios (
             nombre,
             email,
             password_hash
         )
-        VALUES (?,?,?)
-        `).run(nombre,email,hash);
+        VALUES (?, ?, ?)
+    `).run(nombre, email, hash);
+    } catch (error: any) {
+    if (error.code === "SQLITE_CONSTRAINT_UNIQUE") {
+        return {
+            error: "Correo ya registrado",
+            success: false,
+        };
+    }
 
-    redirect('/login');
+    throw error;
+}
+    return{
+        success:true,
+        error: null,};
 }
 
 export async function CrearTablon(formData: FormData): Promise<void>{
@@ -63,10 +74,11 @@ export async function CrearTarea(formData: FormData): Promise<void>{
         VALUES (?,?,?)
         `).run(tablon_id,titulo,descripcion);
 
+
     revalidatePath('/dashboard');
 }
 
-export async function EdiarEstado(formData: FormData): Promise<void>{
+export async function EditarEstado(formData: FormData): Promise<void>{
 
     const id = Number(formData.get('id'));
     const estado = formData.get('estado');

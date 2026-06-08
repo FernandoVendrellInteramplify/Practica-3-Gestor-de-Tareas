@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Confirm from "./confirm";
+import { SubmitButton } from "./confirm";
 
 
 type BoardModalProps = {
@@ -55,10 +56,7 @@ export default function BoardModal({
                                 className="rounded-xl bg-red-700 px-4 py-2 text-zinc-50 hover:bg-red-600">
                                     Cancelar
                                 </button>
-                                <button type="submit"
-                                className="rounded-xl bg-blue-600 px-4 py-2 text-zinc-50 hover:bg-blue-500">
-                                    {submitText}
-                                </button>
+                                <SubmitButton title={submitText} className="rounded-xl bg-blue-600 px-4 py-2 text-zinc-50 hover:bg-blue-500" t1={submitText} t2="" />
                             </div>
                         </Confirm>
 

@@ -1,31 +1,29 @@
-
-import { Registro } from "@/lib/actions";
+import Link from "next/link";
+import RegistroForm from "@/components/FormularioRegistro"
 
 export default function PaginaResgistro(){
+    return (
+    <main className="min-h-screen p-8  font-sans bg-zinc-200 dark:bg-zinc-800" >
+      <div className="mx-auto max-w-7xl ">
+        <header className="mb-8 flex items-center justify-between ">
 
-    return(
-        <main>
-            <div>
-                <header>
-                    <h1>
-                        Registro
-                    </h1>
-                </header>
-                <section>
-                    <form action={Registro}>
-                        <input type="text" name="nombre" placeholder="Nombre de usuario" required/>
+          <h1 className="text-6xl justify-center">Gestor de Tareas</h1>
 
-                        <input type="email" name="email" placeholder="Email" required/>
+          <Link href="/" className="rounded-lg animate-[fadeRight_0.6s_ease-out] bg-blue-600 px-4 py-2 text-white hover:bg-blue-500">
+            Volver a inicio
+          </Link>
 
-                        <input type="password" name="password" placeholder="Contraseña" required/>
+        </header>
 
-                        <button  type="submit" className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500">
-                            Registrarse
-                        </button>
+        <section className="rounded-lg animate-[fadeUp_0.6s_ease-out] w-100 items-center justify-between p-10 bg-zinc-300 dark:bg-zinc-900 ml-100  sm:items-start">
 
-                    </form>
-                </section>
-            </div>
-        </main>
-    )
+          <h2 className="text-3xl justify-center mb-5">
+            Registrar Usuario
+          </h2>
+          <RegistroForm />
+
+        </section>
+      </div>
+    </main>
+  );
 }
