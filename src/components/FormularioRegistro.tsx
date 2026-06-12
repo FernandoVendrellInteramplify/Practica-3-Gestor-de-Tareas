@@ -75,9 +75,10 @@ export default function RegistroForm() {
     </div>
   </div>
 
-  <SubmitButton title="Registrarse" t1="Registrarse" t2="Registrando"
-   className="mt-6 cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500"
-  />
+  <SubmitButton title="Registrarse" t2="Registrando"
+   className="mt-6 cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500">
+    Registrarse
+  </SubmitButton>
 </form>
   );
 }

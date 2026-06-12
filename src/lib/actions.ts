@@ -56,7 +56,7 @@ export async function CrearTablon(formData: FormData): Promise<void>{
         VALUES (?,?)
         `).run(usuario_id, titulo);
 
-    revalidatePath('/dashboard');
+    revalidatePath("/dashboard");
 }
 
 export async function CrearTarea(formData: FormData): Promise<void>{
@@ -75,7 +75,7 @@ export async function CrearTarea(formData: FormData): Promise<void>{
         `).run(tablon_id,titulo,descripcion);
 
 
-    revalidatePath('/dashboard');
+     revalidatePath("/dashboard");
 }
 
 export async function EditarEstado(formData: FormData): Promise<void>{
@@ -91,7 +91,7 @@ export async function EditarEstado(formData: FormData): Promise<void>{
         WHERE id = ?
     `).run(estado,id);
 
-    revalidatePath('/dashboard');
+     revalidatePath("/dashboard");
 }
 
 export async function Borrar(formData: FormData): Promise<void>{
@@ -113,7 +113,7 @@ export async function Borrar(formData: FormData): Promise<void>{
         `).run(id);
     }
 
-    revalidatePath('/dashboard');
+     revalidatePath("/dashboard");
 }
 
 export async function loginAction(
@@ -148,4 +148,14 @@ export async function logoutAction(
 ) {
     await signOut({redirect: false,}); 
     return{success: true,};
+}
+export async function moverTarea(id:number,tablon_id:number) {
+    db.prepare(`
+    UPDATE tareas
+    SET tablon_id = ?
+    WHERE id = ?
+  `).run(tablon_id, id);
+
+  revalidatePath("/dashboard");
+    
 }

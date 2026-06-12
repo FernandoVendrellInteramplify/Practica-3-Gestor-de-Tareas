@@ -66,8 +66,10 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <SubmitButton title="Iniciar Sesión" t1="Iniciar sesión" t2="Iniciando..."
-        className="mt-6 cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500 transition-colors"/>
+      <SubmitButton title="Iniciar Sesión"  t2="Iniciando..."
+        className="mt-6 cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500 transition-colors">
+        Iniciar sesión
+      </SubmitButton>
     </form>
     
   );

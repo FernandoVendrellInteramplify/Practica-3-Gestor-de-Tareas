@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Confirm from "./confirm";
+import { toast } from "sonner";
 import { SubmitButton } from "./confirm";
+import { PenLine, ClipboardPlus } from "lucide-react";
+
 
 
 type TaskModalProps = {
     title: string;
     tablon_id: string;
-    buttonText: string;
     submitText: string;
 
     formAction: (
@@ -19,7 +20,6 @@ type TaskModalProps = {
 export default function TaskModal({
   title,
   tablon_id,
-  buttonText,
   submitText,
   formAction,
 }: TaskModalProps) {
@@ -33,42 +33,53 @@ export default function TaskModal({
         <>
             <button type="button" onClick={() => setOpen(true)} title="Añadir Tarea"
                 className="rounded-lg bg-blue-500 px-2 py-2 text-sm font-medium text-zinc-50 hover:bg-blue-700">
-                {buttonText}
+                <PenLine/>
             </button>
 
             {open&&(
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <section>
-                        <div className="w-42  rounded-2xl justify-text-center text-zinc-100 bg-blue-600"> 
-                            <h2 className="text-center font-bold p-2">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                    <section className="w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl animate-in fade-in zoom-in-95">
+                        <div className="border-b border-zinc-200 bg-blue-600 px-6 py-4">
+                            <h2 className="flex items-center gap-2 text-xl font-bold text-white">
+                                <ClipboardPlus className="h-5 w-5" />
                                 {title}
                             </h2>
                         </div>
 
-                        <Confirm formAction={async (formData) => {await formAction(formData);setOpen(false);}}
-                         message="¿Añadir esta tarea?" successMessage={`Tarea "${titulo}" añadida correctamente`}
-                         className="grid gap-4 rounded-2xl border border-zinc-600 bg-zinc-400 p-6 text-black md:grid-cols-2">
-                                                     
-                            <input type="hidden" name="tablon_id" value={tablon_id}/>
-                            
-                            <label htmlFor="titulo" className="font-semibold" >Tutulo de la Tarea</label>
-                            <input type="text" name="titulo" required value={titulo} onChange={(e) => setTitulo(e.target.value)}
-                            className="bg-zinc-200 rounded"/>
-                 
-                            <label htmlFor="descripcion" className="font-semibold">Descripcion de la tarea</label>
-                            <input type="text" name="descripcion" required className="bg-zinc-200 rounded"/>
-                            
-                            <div className="mt-4 flex justify-end font-bold  gap-3">
-                                <button type="button" onClick={() => setOpen(false)}
-                                className="rounded-xl bg-red-700 px-4 py-2 text-zinc-50 hover:bg-red-600">
-                                    Cancelar
-                                </button>
-                                <SubmitButton title={submitText}
-                                className="rounded-xl bg-blue-600 px-4 py-2 text-zinc-50 hover:bg-blue-500" t1={submitText} t2="" />
-                    
-                            </div>
-                        </Confirm>
+                        <form action={async (formData) => {await formAction(formData);
+                         toast.success(`Tarea "${titulo}" añadida correctamente`);
+                         setOpen(false);setTitulo("");}} className="space-y-5 p-6">
 
+                            <input type="hidden" name="tablon_id" value={tablon_id} />
+
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="titulo" className="text-sm font-semibold text-zinc-700">
+                                Título de la tarea
+                                </label>
+                                <input type="text" name="titulo" required value={titulo} onChange={(e) => setTitulo(e.target.value)} placeholder="Titulo de la tarea"
+                                className="rounded-lg border border-zinc-300 px-3 py-2 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"/>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="descripcion" className="text-sm font-semibold text-zinc-700">
+                                Descripción
+                                </label>
+                                <textarea name="descripcion" required rows={4} placeholder="Describe la tarea..."
+                                className="resize-none rounded-lg border border-zinc-300 px-3 py-2 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"/>
+                            </div>
+
+                            <div className="flex justify-end gap-3 border-t border-zinc-200 pt-4">
+                                <button type="button" onClick={() => {setOpen(false); setTitulo("");}}
+                                className="rounded-lg border border-zinc-300 px-4 py-2 font-medium text-zinc-700 transition hover:bg-zinc-100">
+                                Cancelar
+                                </button>
+
+                                <SubmitButton title={submitText} t2=""
+                                className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white transition hover:bg-blue-500">
+                                {submitText}
+                                </SubmitButton>
+                            </div>
+                        </form>
                     </section>
                 </div>
             )}

@@ -6,8 +6,12 @@ import { getTablonUsuario, getTareaTablon} from "@/lib/db";
 import { TablonesGrid } from "@/components/TablonGrid";
 import LogoutForm from "@/components/FormularioLogout";
 import { RefreshOnMount } from "@/components/FormularioLogout";
+import { Plus } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
+     console.log("RENDER DASHBOARD", new Date().toISOString());
 
     const session = await auth();
 
@@ -42,7 +46,11 @@ export default async function DashboardPage() {
                 <BoardModal
                 title="Crear Tablon"
                 user_id={session.user.id}
-                buttonText="Nuevo Tablón +"
+                buttonText={<span className="flex items-center gap-2">
+                    <Plus size={16} />
+                    Nuevo tablón
+                    </span>
+                }
                 submitText="Crear"
                 formAction={CrearTablon}
                 />

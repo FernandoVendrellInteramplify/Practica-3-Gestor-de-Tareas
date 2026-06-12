@@ -45,23 +45,21 @@ export default function Confirm({
   }
 
   async function confirmAction() {
+  if (!pendingData) return;
 
-    if (!pendingData) return;
+  const result = await formAction(pendingData);
 
-    const result = await formAction(pendingData);
+  setOpen(false);
+  toast.success(successMessage);
 
-    setOpen(false);
+  router.refresh();
 
-    toast.success(successMessage);
-
-    if (result?.redirectTo) {
-      setTimeout(() => {
-            router.push(result.redirectTo!);
-        }, 10);
+  if (result?.redirectTo) {
     setTimeout(() => {
-      setSuccess(false);
-    }, 3000);}
+      router.push(result.redirectTo!);
+    }, 10);
   }
+}
 
   return (
     <>
@@ -75,7 +73,7 @@ export default function Confirm({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50">
           <div className="animate-[fadeUp_0.2s_ease-out] w-full max-w-md rounded-2xl bg-zinc-100 p-6 shadow-2xl border border-zinc-200 shadow-blue-600/30">
 
-            <p className="mt-3 text-zinc-700 text-center dark:text-zinc-300">
+            <p className="mt-3 text-zinc-700 text-center">
               {message}
             </p>
             <div className="mt-6 flex justify-center gap-3">
@@ -99,28 +97,30 @@ export default function Confirm({
 interface SubmitButtonProps {
   className?: string;
   title: string
-  t1: string;
+  children: React.ReactNode;
   t2: string;
   disabled?:boolean;
 }
 
 
-export function SubmitButton({title, className, t1, t2}:SubmitButtonProps) {
+export function SubmitButton({title, className, disabled, children, t2}:SubmitButtonProps) {
   const { pending } = useFormStatus();
 
-  const boton = t2==="";
+  const isDisabled = pending || Boolean(disabled);
+  const showSpinner = pending && t2 === "";
 
   return (
     <button
       type="submit"
-      title= {title}
-      disabled={pending}
-      className= {className}
+      title={title}
+      disabled={isDisabled}
+      className={className}
     >
-    {pending ? t2 : t1}
+      {pending ? t2 : children}
 
-    {pending && boton &&(<div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />)}
-     
+      {showSpinner && (
+        <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+      )}
     </button>
   );
 }

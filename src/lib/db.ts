@@ -50,13 +50,14 @@ export function getUsuarioEmail(email:string): Usuario | undefined {
 }
 
 export function getTablonUsuario(user_id:string):Tablon[]{
-    return db.prepare(`
+    const datos= db.prepare(`
         SELECT
          id,
          titulo
         FROM tablones
         WHERE usuario_id =?
         `).all(user_id) as Tablon[];
+        return datos;
 }
 
 export function getTareaTablon(tablon_id:string):Tarea[]{

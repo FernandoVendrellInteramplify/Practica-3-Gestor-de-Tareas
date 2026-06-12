@@ -33,7 +33,9 @@ export default function LogoutForm() {
     <form action={formAction}>
 
       <SubmitButton title="Cerrar sesion" className="animate-[fadeRight_0.5s_ease-out] cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-500 hover:scale-101" 
-      t1="Cerrar sesion" t2="Cerrando" />
+       t2="Cerrando">
+        Cerrar sesion
+      </SubmitButton>
         
     </form>
   );

@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Confirm from "./confirm";
 import { SubmitButton } from "./confirm";
+import { toast } from "sonner";
+import { KanbanSquare } from "lucide-react";
 
 
 type BoardModalProps = {
   title: string;
   user_id: string;
-  buttonText: string;
+  buttonText: React.ReactNode;
   submitText: string;
 
   formAction: (
@@ -35,30 +36,41 @@ export default function BoardModal({
             </button>
 
             {open&&(
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 ">
-                    <section>
-                        <div>
-                            <h2>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                    <section className="w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl animate-in fade-in zoom-in-95">
+                        <div className="border-b border-zinc-200 bg-blue-600 px-6 py-4">
+                            <h2 className="flex items-center gap-2 text-xl font-bold text-white">
+                                <KanbanSquare className="h-5 w-5" />
                                 {title}
                             </h2>
                         </div>
-
-                        <Confirm formAction={async (formData) => {await formAction(formData);setOpen(false);}}
-                            message="¿Crear este tablón?" successMessage={`Tablón "${titulo}" creado correctamente`}
-                                className="grid gap-4 rounded-2xl border border-zinc-200 bg-white p-6 md:grid-cols-2">
-
+                        <form action={async (formData) => {await formAction(formData);
+                        toast.success(`Tablon "${titulo}" creado correctamente`); setOpen(false);setTitulo("");}}
+                        className="space-y-5 p-6">
                             <input type="hidden" name="usuario_id" required value={user_id}/>
 
-                            <input type="text" name="titulo" required value={titulo} onChange={(e) => setTitulo(e.target.value)} placeholder="Nombre del Tablón"/>
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="titulo" className="text-sm font-semibold text-zinc-700">
+                                Nombre del tablón
+                                </label>
 
-                            <div className="mt-4 flex justify-end gap-3">
-                                <button type="button" onClick={() => setOpen(false)}
-                                className="rounded-xl bg-red-700 px-4 py-2 text-zinc-50 hover:bg-red-600">
-                                    Cancelar
-                                </button>
-                                <SubmitButton title={submitText} className="rounded-xl bg-blue-600 px-4 py-2 text-zinc-50 hover:bg-blue-500" t1={submitText} t2="" />
+                                <input type="text" name="titulo" required value={titulo}
+                                onChange={(e) => setTitulo(e.target.value)} placeholder="Titulo del Tablon"
+                                className="rounded-lg border border-zinc-300 px-3 py-2 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"/>
                             </div>
-                        </Confirm>
+
+                            <div className="flex justify-end gap-3 border-t border-zinc-200 pt-4">
+                                <button type="button" onClick={() => { setOpen(false); setTitulo(""); }}
+                                className="rounded-lg border border-zinc-300 px-4 py-2 font-medium text-zinc-700 transition hover:bg-zinc-100">
+                                Cancelar
+                                </button>
+
+                                <SubmitButton title={submitText} t2=""
+                                className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white transition hover:bg-blue-500">
+                                {submitText}
+                                </SubmitButton>
+                            </div>
+                        </form>
 
                     </section>
                 </div>
