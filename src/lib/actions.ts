@@ -4,7 +4,10 @@
 import { revalidatePath } from 'next/cache';
 import bcryptjs from "bcryptjs";
 import db from "./db";
-import { signIn,signOut } from "@/lib/auth";
+import { getUser } from './db';
+import { signIn,signOut,auth } from "@/lib/auth";
+
+const session = await auth();
 
 
 export async function Registro(prevState: any, formData: FormData){
@@ -48,6 +51,9 @@ export async function CrearTablon(formData: FormData): Promise<void>{
     const titulo = formData.get('titulo');
     const usuario_id = Number(formData.get('usuario_id'));
 
+
+    if(usuario_id !== Number(session?.user.id)){return}
+
     db.prepare(`
         INSERT INTO tablones (
             usuario_id,
@@ -64,6 +70,10 @@ export async function CrearTarea(formData: FormData): Promise<void>{
     const titulo = formData.get('titulo');
     const tablon_id = Number(formData.get('tablon_id'));
     const descripcion = formData.get('descripcion');
+    const usuario = getUser(tablon_id);
+
+
+    if(usuario != Number(session?.user.id)){return}
 
     db.prepare(`
         INSERT INTO tareas(
@@ -82,8 +92,6 @@ export async function EditarEstado(formData: FormData): Promise<void>{
 
     const id = Number(formData.get('id'));
     const estado = formData.get('estado');
-
-    console.log("Estado recibido:", estado);
 
     db.prepare(`
         UPDATE tareas
@@ -149,6 +157,7 @@ export async function logoutAction(
     await signOut({redirect: false,}); 
     return{success: true,};
 }
+
 export async function moverTarea(id:number,tablon_id:number) {
     db.prepare(`
     UPDATE tareas

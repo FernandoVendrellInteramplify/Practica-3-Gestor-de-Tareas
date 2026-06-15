@@ -1,5 +1,4 @@
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import BoardModal from "@/components/BoardModal";
 import { CrearTablon } from "@/lib/actions";
 import { getTablonUsuario, getTareaTablon} from "@/lib/db";
@@ -15,9 +14,9 @@ export default async function DashboardPage() {
 
     const session = await auth();
 
-    if(!session){redirect("/login");}
+    
 
-    const tablones = getTablonUsuario(session.user.id);
+    const tablones = getTablonUsuario(session!.user.id);
     const tablonesConTareas = tablones.map((tablon) => 
         ({...tablon,
         tareas: getTareaTablon(String(tablon.id)),
@@ -35,7 +34,7 @@ export default async function DashboardPage() {
                 </h1>
 
                 <p className="animate-[fadeLeft_0.5s_ease-out] mt-2 text-zinc-600">
-                    Bienvenido, {session.user.name}
+                    Bienvenido, {session!.user.name}
                 </p>
                 </div>
 
@@ -45,7 +44,7 @@ export default async function DashboardPage() {
             
                 <BoardModal
                 title="Crear Tablon"
-                user_id={session.user.id}
+                user_id={session!.user.id}
                 buttonText={<span className="flex items-center gap-2">
                     <Plus size={16} />
                     Nuevo tablón

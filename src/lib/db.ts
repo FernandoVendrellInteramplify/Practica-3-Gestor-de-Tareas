@@ -85,4 +85,20 @@ export function getEmail(email:string): Boolean{
     }
 }
 
+export function getUser(tablon_id: number): number {
+  const result = db
+    .prepare(`
+      SELECT usuario_id
+      FROM tablones
+      WHERE id = ?
+    `)
+    .get(tablon_id) as { usuario_id: number } | undefined;
+
+  if (!result) {
+    throw new Error("Tablón no encontrado");
+  }
+
+  return result.usuario_id;
+}
+
 export default db; 
